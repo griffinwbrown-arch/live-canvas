@@ -11,14 +11,16 @@ try {
   const page = await app.firstWindow()
   page.setDefaultTimeout(20000)
   await page.waitForSelector('.tl-canvas')
+  await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].showInactive())
   await page.evaluate(() =>
     window.desktop.onCapture((data) => {
       window.lastCapture = data
     }),
   )
   let nextWindow = app.waitForEvent('window')
+  nextWindow.catch(() => {})
   await page.getByRole('button', { name: 'Source options' }).click()
-  await page.getByRole('button', { name: 'Capture region', exact: true }).click()
+  await page.getByRole('button', { name: /^Capture region/ }).click()
   let crop = await nextWindow
   await crop.waitForFunction(() => document.querySelector('img')?.naturalWidth > 0)
   const closed = crop.waitForEvent('close')
@@ -28,8 +30,9 @@ try {
   await closed
   assert.equal(await page.locator('.mode-button').innerText(), 'Canvas')
   nextWindow = app.waitForEvent('window')
+  nextWindow.catch(() => {})
   await page.getByRole('button', { name: 'Source options' }).click()
-  await page.getByRole('button', { name: 'Capture region', exact: true }).click()
+  await page.getByRole('button', { name: /^Capture region/ }).click()
   crop = await nextWindow
   await crop.waitForFunction(() => document.querySelector('img')?.naturalWidth > 0)
   const size = await crop.evaluate(() => ({ w: innerWidth, h: innerHeight }))
@@ -53,6 +56,9 @@ try {
       liveStreamStarted: true,
     }),
   )
+} catch (error) {
+  console.error('Capture overlay test failed:', error)
+  throw error
 } finally {
   await app.close()
   await server.close()

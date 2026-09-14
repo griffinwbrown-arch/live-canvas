@@ -22,6 +22,9 @@ This was a focused code and release-readiness review of capture/rendering, crop 
 - Production dependency advisory check: **0 known advisories** reported by `pnpm audit --prod` on the review date. This is an advisory snapshot, not proof of absence of vulnerabilities.
 - Twelve unit checks cover crop, source pointer mapping, pinch anchors, zoom limits, resize bounds, and runtime hostname validation.
 - Electron UI regression covers Clear/Undo, selecting/moving ink over a live source, pinch isolation, source-mode input cancellation, responsive widths, fullscreen, and reduced motion.
+- Native crop-overlay checks passed for cancellation, region selection, and starting the live crop. The test now matches the button name including shortcut text and surfaces pending-window errors correctly.
+- Packaged capture, native clicking, zoom buttons, and injected pinch passed with a deliberately invalid development URL override.
+- GitHub CI passed a clean Linux install, formatting, TypeScript, unit tests, and renderer build.
 - Public screenshots are generated through the app with a synthetic source. They contain no personal desktop capture or license key.
 - Source publication excludes environment files, generated build output, installers, test output, developer dependencies, and local chronological work notes.
 

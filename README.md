@@ -2,13 +2,15 @@
 
 **Bring a screen into view. Draw over it. Share the result.**
 
+[![Checks](https://github.com/griffinwbrown-arch/live-canvas/actions/workflows/check.yml/badge.svg)](https://github.com/griffinwbrown-arch/live-canvas/actions/workflows/check.yml)
+
 Live Canvas is a Windows desktop app for annotating a live screen, an application window, or a selected region. Built for the Huion Kamvas and other pen displays, it also works with a mouse. Capture a product flow, sketch the change, and copy the picture into a conversation without juggling screenshots and drawing apps.
 
 ![Live Canvas showing a demo storefront with arrows, a highlighted button, and a written annotation](docs/screenshots/annotate.png)
 
 _Actual app screenshots using a synthetic product-review screen. No private desktop content is shown._
 
-[Get started](#get-started) · [User guide](docs/guide.md) · [Architecture](docs/architecture.md) · [Audit and limitations](docs/audit.md)
+[Get started](#get-started) Â· [User guide](docs/guide.md) Â· [Architecture](docs/architecture.md) Â· [Audit and limitations](docs/audit.md)
 
 ## What it does
 
@@ -24,7 +26,7 @@ There is no screenshot-upload service or automatic chat submission. **Copy image
 
 ## Focus without losing context
 
-Crop to the part you want to discuss. Use the bottom **− / percentage / +** controls or **Ctrl + wheel** to change scale. Zooming out reveals the source beyond the original crop; tapping the percentage returns to that crop. Touch-capable devices support pinch and finger pan.
+Crop to the part you want to discuss. Use the bottom **âˆ’ / percentage / +** controls or **Ctrl + wheel** to change scale. Zooming out reveals the source beyond the original crop; tapping the percentage returns to that crop. Touch-capable devices support pinch and finger pan.
 
 ![A cropped view of the same demo storefront, with its annotations enlarged together](docs/screenshots/focus.png)
 
@@ -52,7 +54,7 @@ pnpm dev
 
 Local development does not require a tldraw production key. The optional Windows launcher, `Launch Live Canvas.vbs`, starts the development app without a terminal after dependencies are installed.
 
-1. Choose **Source → Choose screen or window**.
+1. Choose **Source â†’ Choose screen or window**.
 2. Draw with the pen, arrows, shapes, or text. **Select** moves your annotations, including while the capture is live.
 3. Use **Crop view** to focus, or **Freeze** to hold a frame.
 4. Click **Copy image** and paste it elsewhere, or **Save** a PNG.
@@ -97,6 +99,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the project layout, testing expectati
 
 ## License and credits
 
-Original Live Canvas code is [MIT licensed](LICENSE), © 2026 Griffin Brown. Third-party dependencies retain their own licenses. In particular, **tldraw requires a separate production license** for downstream users. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Original Live Canvas code is [MIT licensed](LICENSE), Â© 2026 Griffin Brown. Third-party dependencies retain their own licenses. In particular, **tldraw requires a separate production license** for downstream users. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 Built with [Electron](https://www.electronjs.org/), [React](https://react.dev/), and the [tldraw SDK](https://tldraw.dev/). Live Canvas is an independent project, not an official Huion or tldraw application.
