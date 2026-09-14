@@ -1,48 +1,39 @@
 # Live Canvas
 
-**Bring a screen into view. Draw over it. Share the result.**
+**Click and drag over an area of your monitor to open a live, drawable view of it on a drawing tablet or second screen.**
 
-[![Checks](https://github.com/griffinwbrown-arch/live-canvas/actions/workflows/check.yml/badge.svg)](https://github.com/griffinwbrown-arch/live-canvas/actions/workflows/check.yml)
+The selected area keeps updating as you work in the original app. Draw over it with a pen or mouse, zoom in on a detail, or freeze a frame to mark it up. Copy or save the view with your annotations when you're ready to share it.
 
-Live Canvas is a Windows desktop app for annotating a live screen, an application window, or a selected region. Built for the Huion Kamvas and other pen displays, it also works with a mouse. Capture a product flow, sketch the change, and copy the picture into a conversation without juggling screenshots and drawing apps.
+## How it works
 
-![Live Canvas showing a demo storefront with arrows, a highlighted button, and a written annotation](docs/screenshots/annotate.png)
+1. **Put Live Canvas on your other screen.** Choose the destination display in the Source menu.
+2. **Select an area on your monitor.** Move your pointer to the source monitor, press **Ctrl+Alt+S**, then click and drag a rectangle.
+3. **That area appears as a live view in Live Canvas.** Draw on top while the original app keeps running.
 
-_Actual app screenshots using a synthetic product-review screen. No private desktop content is shown._
+You can also choose a whole monitor or an application window from the Source menu.
 
-[Get started](#get-started) Â· [User guide](docs/guide.md) Â· [Architecture](docs/architecture.md) Â· [Audit and limitations](docs/audit.md)
+![Live Canvas displaying a captured demo storefront with a drawn note, arrow, and outline around a button](docs/screenshots/annotate.png)
 
-## What it does
+## Work with the live view
 
-- **Live capture:** mirror a monitor, window, or region at a requested maximum of 30 fps.
-- **Draw and explain:** pen, highlighter, arrows, shapes, text, color, and stroke controls powered by tldraw.
-- **Focus the view:** crop, zoom in, zoom back out to the full source, and keep annotations aligned.
-- **Freeze a moment:** hold a frame while the source continues changing. Resume when ready.
-- **Export picture + ink:** copy to the clipboard, save a PNG, or save a smaller snip. Controls stay out of exports.
-- **Keep the canvas open:** full-window workspace with a collapsible toolbar and quick Undo/Clear.
-- **Control the source, experimentally:** switch explicitly from selecting annotations to interacting with the captured app.
+- **Draw:** pen, highlighter, arrows, shapes, and text, with Undo and Clear.
+- **Zoom:** use the bottom -/+ buttons or Ctrl+wheel. Zoom out beyond your crop to see more of the source; tap the percentage to return to the selected area. Touch-capable devices also support pinch and pan.
+- **Freeze:** pause the captured image to annotate a moment, then resume the live view.
+- **Copy or save:** export the visible picture and annotations as a PNG, or save a smaller snip. The toolbar stays out of the image.
 
-There is no screenshot-upload service or automatic chat submission. **Copy image**, then paste into your chat. For a call, share the Live Canvas window through your meeting app.
+![A closer view of the captured area with the annotations enlarged alongside it](docs/screenshots/focus.png)
 
-## Focus without losing context
+## Present or share
 
-Crop to the part you want to discuss. Use the bottom **âˆ’ / percentage / +** controls or **Ctrl + wheel** to change scale. Zooming out reveals the source beyond the original crop; tapping the percentage returns to that crop. Touch-capable devices support pinch and finger pan.
+Collapse the toolbar for more space. To show the live annotated view in a call, share the Live Canvas window through your meeting app. To send a still image to a chat or document, click **Copy image** and paste it there.
 
-![A cropped view of the same demo storefront, with its annotations enlarged together](docs/screenshots/focus.png)
+![The live view with the toolbar collapsed to compact Undo and Clear controls](docs/screenshots/present.png)
 
-The **Kamvas 13 does not support finger touch**. Use the zoom buttons with its pen, or a mouse/trackpad. See [Huion's hardware FAQ](https://support.huion.com/en/support/solutions/articles/44002010211-huion-kamvas-12-13-16-2021-faqs).
+[See the exported image](docs/screenshots/export.png) or read the [user guide](docs/guide.md).
 
-## A clean surface for presenting
+## Run it
 
-Collapse the toolbar to keep the picture visible. Undo and Clear remain available. Share the app window using Teams, Zoom, or your meeting app's normal screen-sharing controls. Compatibility with each meeting app has not been individually verified.
-
-![Live Canvas with the main toolbar collapsed and quick controls visible](docs/screenshots/present.png)
-
-[See the exported PNG without app controls](docs/screenshots/export.png).
-
-## Get started
-
-This public release is **source code**, not a prelicensed binary download. Windows 10/11, Node.js 22.12 or newer, and pnpm 11.19.0 are required.
+Live Canvas currently runs on **Windows**. This repository provides the source code. You'll need Node.js 22.12 or newer and pnpm 11.19.0.
 
 ```powershell
 git clone https://github.com/griffinwbrown-arch/live-canvas.git
@@ -52,53 +43,23 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Local development does not require a tldraw production key. The optional Windows launcher, `Launch Live Canvas.vbs`, starts the development app without a terminal after dependencies are installed.
+Local development does not require a tldraw production key. To make an installed Windows app, follow the [build guide](docs/building.md). Production builds require your own appropriate tldraw license.
 
-1. Choose **Source â†’ Choose screen or window**.
-2. Draw with the pen, arrows, shapes, or text. **Select** moves your annotations, including while the capture is live.
-3. Use **Crop view** to focus, or **Freeze** to hold a frame.
-4. Click **Copy image** and paste it elsewhere, or **Save** a PNG.
+## Current limitations
 
-### Build a Windows executable
+- Save or copy before closing; editable sessions are not restored yet.
+- Annotations stay in place when the source content scrolls. Freeze the image when you need stable markup.
+- The optional **Interact with screen** mode forwards input to the source app. It's experimental, and native scrolling is currently unreliable. **Select** edits your annotations instead.
+- Use a different source display or window to avoid capturing Live Canvas inside itself.
 
-Production builds require **your own valid tldraw license**, appropriate to your usage and the local app hostname. The SDK is not MIT licensed; see [tldraw's license documentation](https://tldraw.dev/community/license).
+See the [audit report](docs/audit.md) for tested behavior and remaining issues.
 
-```powershell
-Copy-Item .env.example .env.local
-# Edit .env.local with your license key and a hostname covered by that license.
-pnpm package:win
-```
+## Development
 
-Set `VITE_TLDRAW_LICENSE_KEY` and `LIVE_CANVAS_HOST` in `.env.local`. The hostname becomes a local `live-canvas://.../` origin served from bundled files; it does not deploy or contact a website. Ask tldraw about the appropriate license for your desktop distribution. License enforcement and the required attribution are preserved.
+[Architecture](docs/architecture.md) | [Contributing](CONTRIBUTING.md) | [Build instructions](docs/building.md)
 
-The installer appears under `release/`. Build output, installers, and `.env.local` are ignored by Git. A frontend license key is embedded in your own built app; do not assume packaging conceals it.
+[![Checks](https://github.com/griffinwbrown-arch/live-canvas/actions/workflows/check.yml/badge.svg)](https://github.com/griffinwbrown-arch/live-canvas/actions/workflows/check.yml)
 
-## Know before using it
+## License
 
-- **Save before closing.** Editable sessions are not persisted yet.
-- **Annotations belong to the view, not the source document.** They do not track elements when the source scrolls. Freeze for stable markup.
-- **Native screen control is experimental.** Clicking, dragging, and typing have passed a local test-window check. Native scrolling has failed repeated checks and is unresolved. Protected, elevated, raw-input, or minimized applications may behave differently.
-- Capturing the display that contains Live Canvas can produce a recursive mirror. A separate source display/window is easier to use.
-- Captured frames stay in this app until you copy, save, or share them. tldraw's own licensing/network behavior remains governed by its SDK license.
-
-## Development and contributing
-
-```powershell
-pnpm check             # formatting, TypeScript, geometry and configuration tests
-pnpm build             # production renderer
-pnpm test:ui           # Windows Electron UI tests with a synthetic source
-pnpm test:overlay      # Windows capture overlay; may briefly show your desktop locally
-pnpm test:pointer      # native compatibility test; scrolling is a known failure
-pnpm test:packaged     # requires a packaged app and a valid production license
-pnpm screenshots      # regenerate the public screenshots using synthetic content
-```
-
-Run Electron integration suites sequentially. They share a separate test profile. CI checks formatting, types, unit tests, and the renderer build; it does not claim physical pen or native desktop compatibility.
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the project layout, testing expectations, and useful areas to work on.
-
-## License and credits
-
-Original Live Canvas code is [MIT licensed](LICENSE), Â© 2026 Griffin Brown. Third-party dependencies retain their own licenses. In particular, **tldraw requires a separate production license** for downstream users. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-
-Built with [Electron](https://www.electronjs.org/), [React](https://react.dev/), and the [tldraw SDK](https://tldraw.dev/). Live Canvas is an independent project, not an official Huion or tldraw application.
+Original Live Canvas code is [MIT licensed](LICENSE), copyright 2026 Griffin Brown. The drawing tools use the [tldraw SDK](https://tldraw.dev/), which has separate production licensing requirements. See [third-party notices](THIRD_PARTY_NOTICES.md).

@@ -1,6 +1,6 @@
 # Using Live Canvas
 
-## Capture → annotate → share
+## Send a monitor area to another screen
 
 ```mermaid
 flowchart LR
@@ -12,7 +12,9 @@ flowchart LR
   D --> G[Share the app window in a call]
 ```
 
-Choose a source from the top-left menu. For a native region capture, use **Capture region** or **Ctrl+Alt+S**. The global shortcut targets the display under your pointer. The menu action uses the selected monitor, or the primary monitor if none is selected.
+Open Live Canvas on the screen where you want the live view, using the display selector in its Source menu. Move your pointer to the source monitor, press **Ctrl+Alt+S**, then click and drag over the area you want to mirror. That area appears in Live Canvas and keeps updating while you draw over it.
+
+You can also use **Capture region** from the Source menu, or choose an entire monitor or application window. The global shortcut targets the monitor under your pointer; the menu capture action uses the selected monitor or the primary monitor.
 
 ## Select and screen control are separate
 
@@ -31,7 +33,7 @@ Input forwarding uses Windows messages, not mouse warping. It is experimental an
 - **Fit:** show the entire selected region with white margins as needed.
 - **Freeze / Resume:** hold a full-source frame, then return to the live stream.
 
-The Kamvas 13 is pen-only, so its screen cannot detect a finger pinch.
+Finger gestures require a touch-capable device. The zoom buttons work with a pen or mouse.
 
 ## Save and copy
 
