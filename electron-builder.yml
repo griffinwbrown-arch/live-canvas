@@ -1,0 +1,32 @@
+appId: com.griffinbrown.livecanvas
+productName: Live Canvas
+directories:
+  app: packaging/app
+  output: release
+files:
+  - dist/**/*
+  - electron/**/*
+  - package.json
+asar: true
+electronDist: node_modules/electron/dist
+extraResources:
+  - from: electron/input-bridge.ps1
+    to: input/input-bridge.ps1
+  - from: electron/InputBridge.cs
+    to: input/InputBridge.cs
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: packaging/icon.ico
+  executableName: Live Canvas
+nsis:
+  oneClick: true
+  perMachine: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Live Canvas
+  artifactName: Live Canvas Setup ${version}.${ext}
+  runAfterFinish: false
+npmRebuild: false
+publish: null

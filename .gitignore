@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+test-results/
+*.log
+.vite*/
+packaging/app/
+release/
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+
+# Local chronological work notes; public findings are in docs/audit.md.
+/VERIFIED.md
+/UI-REVIEW.md

@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Select capture area</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        overflow: hidden;
+        cursor: crosshair;
+        background: #111;
+        font-family:
+          Segoe UI,
+          sans-serif;
+        user-select: none;
+      }
+      img {
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+      }
+      #rect {
+        position: fixed;
+        border: 2px solid #f5c76a;
+        box-shadow: 0 0 0 9999px #0007;
+        display: none;
+        pointer-events: none;
+      }
+      p {
+        position: fixed;
+        top: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #18201f;
+        color: white;
+        border-radius: 8px;
+        padding: 12px 18px;
+        margin: 0;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <img id="screen" />
+    <div id="rect"></div>
+    <p>Drag to send a live crop to Live Canvas · Esc to cancel</p>
+    <script>
+      let start
+      const rect = document.getElementById('rect')
+      window.crop.ready().then((data) => (document.getElementById('screen').src = data))
+      document.onpointerdown = (e) => {
+        if (e.button !== 0) return
+        start = { x: e.clientX, y: e.clientY }
+        document.body.setPointerCapture(e.pointerId)
+      }
+      document.onpointermove = (e) => {
+        if (!start) return
+        Object.assign(rect.style, {
+          display: 'block',
+          left: Math.min(start.x, e.clientX) + 'px',
+          top: Math.min(start.y, e.clientY) + 'px',
+          width: Math.abs(start.x - e.clientX) + 'px',
+          height: Math.abs(start.y - e.clientY) + 'px',
+        })
+      }
+      document.onpointerup = (e) => {
+        if (!start) return
+        const x = Math.max(0, Math.min(start.x, e.clientX)),
+          y = Math.max(0, Math.min(start.y, e.clientY)),
+          w = Math.min(innerWidth, Math.max(start.x, e.clientX)) - x,
+          h = Math.min(innerHeight, Math.max(start.y, e.clientY)) - y
+        start = null
+        if (w < 12 || h < 12) {
+          rect.style.display = 'none'
+          return
+        }
+        window.crop.commit({
+          x: x / innerWidth,
+          y: y / innerHeight,
+          w: w / innerWidth,
+          h: h / innerHeight,
+        })
+      }
+      document.onkeydown = (e) => {
+        if (e.key === 'Escape') window.crop.cancel()
+      }
+    </script>
+  </body>
+</html>
