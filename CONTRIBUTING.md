@@ -24,3 +24,7 @@ Run `pnpm check` and `pnpm build`. Run `pnpm test:ui` on Windows when changing t
 Useful next work: editable session persistence, robust source scrolling, broader native-app compatibility, and real hardware/meeting-app testing. Describe the source application, Windows/display scaling, input device, reproduction steps, and expected behavior in bug reports. Use synthetic screenshots when possible.
 
 Original contributions are under the repository's MIT license. Third-party dependencies keep their own terms.
+
+## Regenerating the mockup GIFs
+
+Run `python scripts/make-demos.py` with Pillow installed (`python -m pip install Pillow`). The renderer uses Segoe UI on Windows or DejaVu Sans on Linux. It writes the GIFs in `docs/demos/` and a review storyboard in the ignored `test-results/` directory.

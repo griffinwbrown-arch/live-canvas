@@ -2,6 +2,8 @@
 
 **Click and drag over an area of your monitor to open a live, drawable view of it on a drawing tablet or second screen.**
 
+![Drag a monitor region into a live view on another screen, then draw and zoom over it](docs/demos/live-region.gif)
+
 The selected area keeps updating as you work in the original app. Draw over it with a pen or mouse, zoom in on a detail, or freeze a frame to mark it up. Copy or save the view with your annotations when you're ready to share it.
 
 ## How it works
@@ -12,7 +14,7 @@ The selected area keeps updating as you work in the original app. Draw over it w
 
 You can also choose a whole monitor or an application window from the Source menu.
 
-![Live Canvas displaying a captured demo storefront with a drawn note, arrow, and outline around a button](docs/screenshots/annotate.png)
+[Watch the zoom and freeze demos](docs/demos/README.md).
 
 ## Work with the live view
 
