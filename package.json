@@ -19,7 +19,7 @@
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "check": "pnpm format:check && pnpm typecheck && pnpm test",
-    "screenshots": "node scripts/screenshots.mjs"
+    "demo:chrome": "node scripts/demo-chrome.mjs"
   },
   "dependencies": {
     "@tldraw/assets": "5.4.2",

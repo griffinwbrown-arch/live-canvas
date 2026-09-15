@@ -10,6 +10,9 @@ W, H = 1200, 660
 BG, INK, MUTED, BLUE, GREEN = '#f4f5f7', '#202b39', '#637185', '#3765ec', '#258267'
 LEFT, RIGHT = (38, 183, 552, 505), (648, 183, 1162, 505)
 CROP = (152, 88, 616, 374)
+TOOLBAR = Image.open(OUT / 'assets' / 'toolbar.png').convert('RGBA')
+FROZEN_TOOLBAR = Image.open(OUT / 'assets' / 'toolbar-frozen.png').convert('RGBA')
+ATTRIBUTION = Image.open(OUT / 'assets' / 'tldraw.png').convert('RGBA')
 
 def font(size, bold=False):
     candidates = [Path('C:/Windows/Fonts') / ('seguisb.ttf' if bold else 'segoeui.ttf'), Path('/usr/share/fonts/truetype/dejavu') / ('DejaVuSans-Bold.ttf' if bold else 'DejaVuSans.ttf')]
@@ -61,8 +64,10 @@ def ink_layer(im, progress):
     return im
 
 def fit_view(im, scale=1):
-    width,height=RIGHT[2]-RIGHT[0],RIGHT[3]-RIGHT[1]
-    base=im.resize((width,height),Image.Resampling.LANCZOS)
+    width,height=RIGHT[2]-RIGHT[0],RIGHT[3]-RIGHT[1]-44
+    ratio=min(width/im.width,height/im.height)
+    picture=im.resize((round(im.width*ratio),round(im.height*ratio)),Image.Resampling.LANCZOS)
+    base=Image.new('RGB',(width,height),'white');base.paste(picture,((width-picture.width)//2,(height-picture.height)//2))
     if scale!=1:
         big=base.resize((round(width*scale),round(height*scale)),Image.Resampling.LANCZOS)
         cx=round(width*.69*scale);cy=round(height*.52*scale)
@@ -116,7 +121,8 @@ def render(t,mode='flow'):
     if active:
         live=source(1.4 if frozen else t).crop(CROP)
         if drawing:ink_layer(live,drawing)
-        im.paste(fit_view(live,scale),RIGHT[:2]);d=ImageDraw.Draw(im)
+        im.paste(Image.new('RGB',(514,322),'white'),RIGHT[:2])
+        im.paste(fit_view(live,scale),(RIGHT[0],RIGHT[1]+44));d=ImageDraw.Draw(im)
         d.line((577,345,624,345),fill=BLUE,width=3);d.polygon([(625,345),(615,339),(615,351)],fill=BLUE)
         rr(d,(1080,132,1162,162),'#ffffff',10,outline='#dce1e8')
         d.ellipse((1090,143,1097,150),fill='#b78028' if frozen else GREEN)
@@ -125,11 +131,16 @@ def render(t,mode='flow'):
         text(d,(RIGHT[0]+257,RIGHT[3]+14),f'-   {round(scale*100)}%   +',13,anchor='ma')
         if mode=='flow' and 7<t<9.4:
             a=2*math.pi*drawing
-            pointer(d,RIGHT[0]+(336+34*math.cos(a))*514/464,RIGHT[1]+(166+87*math.sin(a))*322/286,True)
+            pointer(d,RIGHT[0]+31+(336+34*math.cos(a))*278/286,RIGHT[1]+44+(166+87*math.sin(a))*278/286,True)
     else:
         rr(d,RIGHT,'#ffffff',0)
         text(d,(905,318),'Your selected area appears here',20,MUTED,anchor='mm')
         text(d,(905,351),'and keeps updating live.',16,MUTED,anchor='mm')
+    chrome=FROZEN_TOOLBAR if frozen else TOOLBAR
+    bar=chrome.resize((484,round(chrome.height*484/chrome.width)),Image.Resampling.LANCZOS)
+    im.paste(bar,(RIGHT[0]+15,RIGHT[1]+7),bar)
+    logo=ATTRIBUTION.resize((78,27),Image.Resampling.LANCZOS)
+    im.paste(logo,(RIGHT[2]-84,RIGHT[3]-32),logo)
     d=ImageDraw.Draw(im)
     text(d,(40,550),'Ctrl + Alt + S',16,INK,True)
     text(d,(40,578),'Drag to choose the area.',16,MUTED)

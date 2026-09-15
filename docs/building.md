@@ -29,7 +29,7 @@ pnpm test:ui           # Windows UI tests with a synthetic source
 pnpm test:overlay      # native capture overlay; may briefly show your desktop locally
 pnpm test:pointer      # native input compatibility; scrolling is a known failure
 pnpm test:packaged     # requires a packaged app and a valid production license
-pnpm screenshots      # regenerate screenshots with a synthetic demo screen
+pnpm demo:chrome      # refresh toolbar and attribution assets for the demos
 ```
 
 Run Electron integration suites sequentially; they share a separate test profile. CI checks formatting, types, unit tests, and the renderer build. Physical input devices and meeting-app compatibility need separate testing.

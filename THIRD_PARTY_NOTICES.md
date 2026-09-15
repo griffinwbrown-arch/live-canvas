@@ -14,3 +14,5 @@ The MIT license at the repository root applies to original Live Canvas source an
 | Prettier                  | [MIT](https://github.com/prettier/prettier/blob/main/LICENSE)                                            |
 
 Keep the tldraw attribution and license checks intact. The repository includes no tldraw license key or bundled SDK distribution. Its screenshots retain visible attribution. Inspect installed package license files for the complete notices when making your own distribution.
+
+The tldraw attribution artwork in `docs/demos/assets/tldraw.png` comes from the installed SDK and remains subject to its original terms; it is not original MIT-licensed demo artwork.

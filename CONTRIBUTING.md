@@ -4,16 +4,16 @@ Start with the README setup steps. Keep changes focused, preserve the pen workfl
 
 ## Source map
 
-| Location                  | Responsibility                                                |
-| ------------------------- | ------------------------------------------------------------- |
-| `src/main.tsx`            | Capture lifecycle, view state, compositing, source picker     |
-| `src/CanvasChrome.tsx`    | Toolbar, drawing options, window controls                     |
-| `src/geometry.mjs`        | Crop, zoom, source-space coordinate mapping                   |
-| `src/PointerControl.tsx`  | Explicit source-control interaction and cancellation          |
-| `src/useViewGestures.ts`  | Touch and trackpad navigation                                 |
-| `electron/`               | Native windows, IPC, clipboard, capture overlay, input helper |
-| `tests/`                  | Unit and Electron integration checks                          |
-| `scripts/screenshots.mjs` | Reproducible screenshots with synthetic content               |
+| Location                 | Responsibility                                                |
+| ------------------------ | ------------------------------------------------------------- |
+| `src/main.tsx`           | Capture lifecycle, view state, compositing, source picker     |
+| `src/CanvasChrome.tsx`   | Toolbar, drawing options, window controls                     |
+| `src/geometry.mjs`       | Crop, zoom, source-space coordinate mapping                   |
+| `src/PointerControl.tsx` | Explicit source-control interaction and cancellation          |
+| `src/useViewGestures.ts` | Touch and trackpad navigation                                 |
+| `electron/`              | Native windows, IPC, clipboard, capture overlay, input helper |
+| `tests/`                 | Unit and Electron integration checks                          |
+| `scripts/make-demos.py`  | Animated two-screen workflow demos                            |
 
 ## Before a pull request
 
@@ -27,4 +27,4 @@ Original contributions are under the repository's MIT license. Third-party depen
 
 ## Regenerating the mockup GIFs
 
-Run `python scripts/make-demos.py` with Pillow installed (`python -m pip install Pillow`). The renderer uses Segoe UI on Windows or DejaVu Sans on Linux. It writes the GIFs in `docs/demos/` and a review storyboard in the ignored `test-results/` directory.
+The toolbar and attribution assets are refreshed with `pnpm demo:chrome`. Run `python scripts/make-demos.py` with Pillow installed (`python -m pip install Pillow`). The renderer uses Segoe UI on Windows or DejaVu Sans on Linux. It writes the GIFs in `docs/demos/` and a review storyboard in the ignored `test-results/` directory.

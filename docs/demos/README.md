@@ -18,4 +18,4 @@ Hold the image on your second screen while the source keeps changing. Resume to 
 
 ![Freeze the mirrored view while the source continues updating, then resume](freeze-frame.gif)
 
-These animations show the workflow in a two-screen mockup. [See the app interface](../screenshots/annotate.png) or [read the user guide](../guide.md).
+[User guide](../guide.md) | [Run or build the app](../building.md)
